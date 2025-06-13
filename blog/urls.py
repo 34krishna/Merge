@@ -19,8 +19,8 @@ urlpatterns = [
     path('category/<slug:slug>/', views.category_detail, name='category_detail'),
     path('Tags/', views.Tag, name='Tag'),
     path('profile/', views.profile, name='profile'),
-    path('category/<int:category_id>/', views.category_detail, name='category_detail'),
-    path('post/<int:pk>/', views.post_detail, name='post_detail'),  
+    # path('category/<int:category_id>/', views.category_detail, name='category_detail'),
+    # path('post/<int:pk>/', views.post_detail, name='post_detail'),  
 
 ]
     

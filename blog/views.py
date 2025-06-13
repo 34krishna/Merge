@@ -47,7 +47,7 @@ def logout_view(request):
     logout(request)
     return redirect('post_list')
 
-@login_required
+
 def post_list(request):
     categories = Category.objects.all()
     tags = Tag.objects.all()
@@ -77,7 +77,6 @@ def post_list(request):
     })
 
 
-@login_required
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)  
     comments = post.comments.filter(parent__isnull=True).order_by('-created_at')  
@@ -189,6 +188,7 @@ def login_page(request):
 
     return render(request, 'blog/login.html')
 
+@login_required
 def category(request, slug):
     
     category = get_object_or_404(Category, slug=slug)
@@ -199,7 +199,7 @@ def category(request, slug):
         'posts': posts,
     })
 
-
+@login_required
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     posts = category.posts.all()  

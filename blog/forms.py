@@ -14,11 +14,12 @@ class RegistrationForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', 'last_name', 'city', 'pincode')
+        fields = ['username', 'email', 'password1', 'last_name', 'city', 'pincode']
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
+        print("")
         user.last_name = self.cleaned_data["last_name"]
         user.city = self.cleaned_data["city"]
         if commit:
