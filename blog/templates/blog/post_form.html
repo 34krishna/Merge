@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">{% if form.instance.pk %} Edit Post {% else %} Create a New Post {% endif %}</h2>
+
+    <form method="post" enctype="multipart/form-data" class="p-4 shadow-sm bg-light rounded">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            {{ form.title }}
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Content</label>
+            {{ form.content }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Upload Image</label>
+            {{ form.image }}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Save Post</button>
+    </form>
+
+    <br>
+    <a href="{% url 'post_list' %}" class="btn btn-secondary">Back to All Posts</a>
+</div>
+{% endblock %}

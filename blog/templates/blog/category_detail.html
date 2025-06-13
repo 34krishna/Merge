@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2>Category: {{ category.name }}</h2>
+
+    {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-4">
+                    <div class="card">
+                        {% if post.thumbnail_image %}
+                            <img src="{{ post.thumbnail_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                        {% else %}
+                            <img src="{% static 'images/default_thumbnail.jpg' %}" class="card-img-top" alt="Default Thumbnail">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                            <a href="{% url 'post_detail' slug=post.slug %}" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No posts found in this category.</p>
+    {% endif %}
+</div>
+{% endblock %}

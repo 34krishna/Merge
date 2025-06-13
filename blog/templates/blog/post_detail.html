@@ -1,0 +1,244 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 20px;
+    }
+
+    .content-area {
+        flex: 1;
+        max-width: 70%;
+        padding-right: 20px;
+    }
+
+    .sidebar {
+        width: 300px;
+        background: #f8f9fa;
+        padding: 20px;
+        border-left: 2px solid #ddd;
+        border-radius: 8px;
+        position: sticky;
+        top: 0;
+        margin-left: 20px;
+    }
+
+    .badge {
+        margin-right: 5px;
+        background-color: #6c757d;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .thumbnail-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .post-content {
+        margin-top: 10px;
+    }
+
+    .featured-img {
+        width: 65%;
+        height: auto;
+    }
+
+    .category-link {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .category-link:hover {
+        text-decoration: underline;
+    }
+
+    .tags {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .tag {
+        background-color:black;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .tag:hover {
+        background-color: black;
+    }
+
+    .comment-box {
+        margin-top: 30px;
+    }
+
+    .comment-item {
+        margin-bottom: 20px;
+    }
+
+    .reply-box {
+        margin-left: 20px;
+        border-left: 2px solid #ddd;
+        padding-left: 15px;
+        margin-top: 15px;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        resize: vertical;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .list-group-item {
+        border: none;
+        background-color: transparent;
+    }
+</style>
+
+<div class="container">
+    <div class="content-area">
+        <!-- Post Header -->
+        <div class="post-header">
+            <div style="display: flex; align-items: center;">
+                {% if post.thumbnail_image %}
+                    <img src="{{ post.thumbnail_image.url }}" class="thumbnail-img" alt="{{ post.title }}">
+                {% else %}
+                    <img src="{% static 'images/default_thumbnail.jpg' %}" class="thumbnail-img" alt="Default Thumbnail">
+                {% endif %}
+                <div>
+                    <h2 class="m-0">{{ post.title }}</h2>
+                    <p class="text-muted" style="font-size: 14px; margin: 5px 0 0 10px;">👁️ {{ post.views }} views</p>
+                </div>
+            </div>
+            <a href="{% url 'post_edit' slug=post.slug %}" class="btn btn-outline-primary me-2" title="Edit Post">
+                <i class="fas fa-pen"></i>
+            </a>
+        </div>
+
+        <!-- Featured Image -->
+        {% if post.featured_image %}
+            <div class="text-center my-3">
+                <img src="{{ post.featured_image.url }}" class="featured-img" alt="{{ post.title }}"/>
+            </div>
+        {% else %}
+            <div class="text-center my-3">
+                <img src="{% static 'images/default_featured.jpg' %}" class="featured-img" alt="Default Featured Image">
+            </div>
+        {% endif %}
+
+        <div style="display: flex; justify-content: end;">
+            <span class="text-muted">{{ post.published_date }}</span>
+        </div>
+
+        <!-- Post Content -->
+        <div class="post-content">
+            <p>{{ post.content|linebreaksbr }}</p>
+        </div>
+
+        <hr>
+
+        <!-- Tags Section -->
+        <h4>Tag:</h4>
+   <ul>
+        {% for tag in post.tags.all %}
+        <a href="#" >|{{ tag.name }}</a>
+        {% endfor %}
+    </ul>
+  
+        <hr>
+
+        <!-- Comments Section -->
+        <h4>Comments</h4>
+        {% if not comments %}
+            <p><strong>No comments yet...</strong></p>
+        {% else %}
+            {% for comment in comments %}
+                <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background-color: #fff; margin-bottom: 15px;">
+                    <p style="font-weight: bold; margin-bottom: 5px;">{{ comment.user.username }}</p>
+                    <p style="margin-bottom: 10px;">{{ comment.text }}</p>
+
+                    <!-- Replies Section -->
+                    {% for reply in comment.replies.all %}
+                        <div class="reply-box">
+                            <p style="font-weight: bold; margin-bottom: 5px;">{{ reply.user.username }}</p>
+                            <p style="margin-bottom: 5px;">{{ reply.text }}</p>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Reply Form -->
+                    <div class="reply-box">
+                        <form method="post" action=".">
+                            {% csrf_token %}
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <textarea name="text" placeholder="Write a reply..." rows="2" class="form-control" required></textarea>
+                            <button type="submit" class="btn btn-secondary mt-2">Reply</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <hr>
+    
+        <!-- New Comment Form -->
+        <h4>Leave a Comment</h4>
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h4>Categories</h4>
+        <ul class="list-group">
+            {% for cat in categories %}
+                <li class="list-group-item {% if category.slug == cat.slug %}active{% endif %}">
+                    <a href="{% url 'category_detail' slug=cat.slug %}" class="category-link">{{ cat.name }}</a>
+                </li>
+            {% empty %}
+                <p>No categories available.</p>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

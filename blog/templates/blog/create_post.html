@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create a New Post</h2>
+    <form method="post" enctype="multipart/form-data" class="p-4 border rounded shadow-sm bg-light">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.title.label_tag }}<br>
+            {{ form.title }}
+        </div>
+        <div class="mb-3">
+            {{ form.content.label_tag }}<br>
+            {{ form.content }}
+        </div>
+        <div class="mb-3">
+            {{ form.featured_image.label_tag }}<br>
+            {{ form.featured_image }}
+        </div>
+        <div class="mb-3">
+            {{ form.category.label_tag }}<br>
+            {{ form.category }}
+        </div>
+        <div class="mb-3">
+            {{ form.tags.label_tag }}<br>
+            {{ form.tags }}
+            
+        <!-- Tags Section -->
+        <h4>Tags</h4>
+        <ul>
+            {% for tag in tag %}
+                <li>{{ tag.name }}</li>
+            {% empty %}
+                <li>No tags available.</li>
+            {% endfor %}
+        </ul>
+        <hr>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,42 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Profile Card -->
+<div class="card shadow-lg mx-auto" style="max-width: 700px; border-radius: 15px;">
+    <div class="card-body">
+        <div class="text-center mb-4">
+            {% if user.profile %}
+                <img src="{{ user.profile.url }}" alt="Profile Image" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+            {% else %}
+                <img src="{% static 'images/default_profile.jpg' %}" alt="Default Profile Image" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+            {% endif %}
+        </div>
+
+        <div class="text-center">
+            <h4 class="mb-3">{{ user.username }}</h4>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>Phone Number:</strong> {{ user.phone_num }}</p>
+                <p><strong>City:</strong> {{ user.city }}</p>
+            </div>
+
+            <div class="col-md-6">
+                <p><strong>State:</strong> {{ user.state }}</p>
+                <p><strong>Country:</strong> {{ user.country }}</p>
+                {% if user.website %}
+                    <p><strong>Website:</strong> <a href="{{ user.website }}" target="_blank">{{ user.website }}</a></p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-center mt-4">
+            <a href="{% url 'edit_profile' %}" class="btn btn-warning mx-2">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

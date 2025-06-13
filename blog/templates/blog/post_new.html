@@ -1,0 +1,82 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="mb-4 text-center">Create a New Post</h3>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">Title</label>
+                    {{ form.title }}
+                </div>
+
+                <!-- Content -->
+                <div class="form-group">
+                    <label for="{{ form.content.id_for_label }}">Content</label>
+                    {{ form.content }}
+                </div>
+
+                <!-- Thumbnail -->
+                <div class="form-group">
+                    <label for="{{ form.thumbnail_image.id_for_label }}">Thumbnail Image</label>
+                    {{ form.thumbnail_image }}
+                </div>
+
+                <!-- Featured -->
+                <div class="form-group">
+                    <label for="{{ form.featured_image.id_for_label }}">Featured Image</label>
+                    {{ form.featured_image }}
+                </div>
+
+                <!-- Category -->
+                <div class="form-group">
+                    <label for="{{ form.category.id_for_label }}">Category</label>
+                    {{ form.category }}
+                </div>
+
+                <!-- Tags -->
+                <div class="form-group">
+                    <label for="{{ form.tags.id_for_label }}">Tags (comma-separated)</label>
+                    {{ form.tags }}
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn btn-primary w-100 mt-3">Publish Post</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    h3 {
+        font-weight: 500;
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+    }
+
+    textarea {
+        min-height: 150px;
+    }
+
+    button {
+        padding: 10px;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}

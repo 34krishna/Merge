@@ -1,0 +1,50 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore the virtual environment directory
+venv/
+env/
+profile_pics/
+
+# Ignore the database file (SQLite example)
+db.sqlite3
+__pycache__/
+migrations/
+static/
+media/
+Scripts/
+Lib/
+
+# Ignore Django migrations
+*/migrations/*
+
+# Ignore log files
+*.log
+
+# Ignore the Django media directory (user-uploaded files)
+media/
+
+# Ignore the Django static directory (compiled static files)
+static/
+
+# Ignore coverage reports and test output
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Ignore operating system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore local environment configuration (e.g., .env files for environment variables)
+.env
+*.env
