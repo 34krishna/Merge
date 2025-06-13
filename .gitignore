@@ -12,7 +12,7 @@ profile_pics/
 db.sqlite3
 __pycache__/
 migrations/
-# static/
+static/
 media/
 Scripts/
 Lib/
@@ -27,7 +27,7 @@ Lib/
 media/
 
 # Ignore the Django static directory (compiled static files)
-# static/
+static/
 
 # Ignore coverage reports and test output
 .coverage
